@@ -1,0 +1,8 @@
+kafka:
+  brokers: 127.0.0.1:9092,127.0.0.1:9093,127.0.0.1:9094
+  topic: noti-test
+  group: perform-group
+  # user: admin
+  # password: admin-secret
+  timeout: 5s
+  log: false
