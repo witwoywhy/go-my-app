@@ -7,7 +7,7 @@ import (
 )
 
 type App interface {
-	Register(method, relativePath string, handlers ...HandlerFunc)
+	Register(method, relativePath string, handlers ...HandleFunc)
 	UseMiddleware(handles ...any)
 	ListenAndServe(addr string)
 }
@@ -34,9 +34,6 @@ func NewLogFromCtx(ctx WebFrameworkContext) log.Logger {
 	}
 }
 
-func UseHandle(handle HandleFunc) HandlerFunc {
-	return func(ctx WebFrameworkContext) error {
-		l := NewLogFromCtx(ctx)
-		return handle(ctx, l)
-	}
+func UseHandle(handle HandleFunc) HandleFunc {
+	return handle
 }

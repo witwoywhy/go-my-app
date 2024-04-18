@@ -6,13 +6,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func toGinHandler(handlers ...app.HandlerFunc) []gin.HandlerFunc {
+func toGinHandler(handlers ...app.HandleFunc) []gin.HandlerFunc {
 	return []gin.HandlerFunc{
 		func(ctx *gin.Context) {
 			for _, handler := range handlers {
-				handler(ginCtxToWebFrameworkCtx(ctx))
+				c := ginCtxToWebFrameworkCtx(ctx)
+				l := app.NewLogFromCtx(c)
+				handler(c, l)
 			}
 		},
 	}
 }
-

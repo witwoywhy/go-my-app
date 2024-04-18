@@ -19,7 +19,7 @@ func New() app.App {
 	}
 }
 
-func (a *App) Register(method string, relativePath string, handlers ...app.HandlerFunc) {
+func (a *App) Register(method string, relativePath string, handlers ...app.HandleFunc) {
 	switch method {
 	case http.MethodGet:
 		a.echo.GET(relativePath, toEchoHandler(handlers[0]))

@@ -19,7 +19,7 @@ func New() app.App {
 	}
 }
 
-func (a *App) Register(method string, relativePath string, handlers ...app.HandlerFunc) {
+func (a *App) Register(method string, relativePath string, handlers ...app.HandleFunc) {
 	h := toGinHandler(handlers...)
 	switch method {
 	case http.MethodGet:
@@ -31,7 +31,7 @@ func (a *App) Register(method string, relativePath string, handlers ...app.Handl
 
 func (a *App) UseMiddleware(handles ...any) {
 	for _, handle := range handles {
-		h := toGinHandler(handle.(app.HandlerFunc))
+		h := toGinHandler(handle.(app.HandleFunc))
 		a.gin.Use(h...)
 	}
 }

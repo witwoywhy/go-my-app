@@ -6,8 +6,10 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func toEchoHandler(handler app.HandlerFunc) echo.HandlerFunc {
+func toEchoHandler(handler app.HandleFunc) echo.HandlerFunc {
 	return func(ctx echo.Context) error {
-		return handler(echoCtxToWebFrameworkCtx(ctx))
+		c := echoCtxToWebFrameworkCtx(ctx)
+		l := app.NewLogFromCtx(c)
+		return handler(c, l)
 	}
 }

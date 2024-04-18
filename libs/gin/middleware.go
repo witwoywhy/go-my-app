@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"myapp/libs/app"
+	"myapp/libs/log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -20,10 +21,8 @@ func (r responseBodyWriter) Write(b []byte) (int, error) {
 	return r.ResponseWriter.Write(b)
 }
 
-func LogRequest() app.HandlerFunc {
-	return func(ctx app.WebFrameworkContext) error {
-		l := app.NewLogFromCtx(ctx)
-
+func LogRequest() app.HandleFunc {
+	return func(ctx app.WebFrameworkContext, l log.Logger) error {
 		writer := ctx.GetWriter().(gin.ResponseWriter)
 		w := &responseBodyWriter{body: &bytes.Buffer{}, ResponseWriter: writer}
 		ctx.SetWriter(w)
